@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dspl xmlns="http://schemas.google.com/dspl/2010"
+      xmlns:geo="http://www.google.com/publicdata/dataset/google/geo"
+      xmlns:time="http://www.google.com/publicdata/dataset/google/time"
+      >
+
+  <import namespace="http://www.google.com/publicdata/dataset/google/geo"/>
+  <import namespace="http://www.google.com/publicdata/dataset/google/time"/>
+  
+  <info>
+    <name><value xml:lang="en">Corruption Perceptions Index</value></name>
+    <description><value xml:lang="en"> Based on expert opinion from
+    around the world, the Corruption Perceptions Index measures the
+    perceived levels of public sector corruption worldwide. Countries
+    are scored on a scale from 0 (highly corrupt) to 100 (very clean).
+    First launched in 1995, the CPI has been widely credited with
+    putting the issue of corruption on the international policy
+    agenda.  Corruption Perceptions Index (2012-2017) by Transparency
+    International is licensed under CC-BY-DE 4.0. The original data
+    have been reformatted and aggregated by Natarajan Krishnaswami.
+    </value></description>
+    <url><value>"https://www.transparency.org/research/cpi/overview</value></url>
+  </info>
+
+  <provider>
+    <name><value xml:lang="en">Transparency International</value></name>
+    <url><value xml:lang="en">https://www.transparency.org</value></url>
+  </provider>
+
+  <concepts>
+    <concept id="cpi">
+      <info>
+	<name><value xml:lang="en">Corruption Perceptions Index</value></name>
+      </info>
+      <type ref="float"/>
+    </concept>
+
+    <concept id="country" extends="geo:country">
+      <info>
+	<name><value xml:lang="en">Country</value></name>
+	<description><value xml:lang="en">The official name of a country.</value></description>
+	<pluralName><value xml:lang="en">Countries</value></pluralName>
+      </info>
+      <type ref="string"/>
+      <property concept="region" isParent="true"/>
+      <property concept="incomegroup"/>
+      <table ref="countries_tbl"/>
+    </concept>
+
+    <concept id="region">
+      <info>
+	<name><value xml:lang="en">Region</value></name>
+	<description><value xml:lang="en">The regions to which countries belong.</value></description>
+	<pluralName><value xml:lang="en">Regions</value></pluralName>
+      </info>
+      <type ref="string"/>
+      <table ref="regions_tbl"/>
+    </concept>
+
+    <concept id="incomegroup">
+      <info>
+	<name><value xml:lang="en">Income Group</value></name>
+	<description><value xml:lang="en">The World Bank 2010 Income Group to which the country belongs.</value></description>
+	<pluralName><value xml:lang="en">Income Groups</value></pluralName>
+      </info>
+      <type ref="string"/>
+      <table ref="incomegroups_tbl"/>
+    </concept>
+  </concepts>
+
+  <slices>
+    <slice id="cpi_by_country">
+      <dimension concept="country"/>
+      <dimension concept="time:year"/>
+      <metric concept="cpi"/>
+      <table ref="cpi_by_country_tbl"/>
+    </slice>
+
+    <slice id="cpi_by_region">
+      <dimension concept="region"/>
+      <dimension concept="time:year"/>
+      <metric concept="cpi"/>
+      <table ref="cpi_by_region_tbl"/>
+    </slice>
+
+    <slice id="cpi_by_incomegrouop">
+      <dimension concept="incomegroup"/>
+      <dimension concept="time:year"/>
+      <metric concept="cpi"/>
+      <table ref="cpi_by_incomegroup_tbl"/>
+    </slice>
+  </slices>
+
+  <tables>
+    <table id="countries_tbl">
+      <column id="country" type="string"/>
+      <column id="region" type="string"/>
+      <column id="incomegroup" type="string"/>
+      <data>
+	<file format="csv" encoding="UTF-8">countries.csv</file>
+      </data>
+    </table>
+
+    <table id="regions_tbl">
+      <column id="region" type="string"/>
+      <data>
+	<file format="csv" encoding="UTF-8">regions.csv</file>
+      </data>
+    </table>
+
+    <table id="incomegroups_tbl">
+      <column id="incomegroup" type="string"/>
+      <data>
+	<file format="csv" encoding="UTF-8">incomegroups.csv</file>
+      </data>
+    </table>
+
+    <table id="cpi_by_country_tbl">
+      <column id="country" type="string"/>
+      <column id="year" type="date" format="yyyy"/>
+      <column id="cpi" type="float"/>
+      <data>
+	<file format="csv" encoding="UTF-8">cpi_by_country.csv</file>
+      </data>
+    </table>
+
+    <table id="cpi_by_region_tbl">
+      <column id="region" type="string"/>
+      <column id="year" type="date" format="yyyy"/>
+      <column id="cpi" type="float"/>
+      <data>
+	<file format="csv" encoding="UTF-8">cpi_by_region.csv</file>
+      </data>
+    </table>
+
+    <table id="cpi_by_incomegroup_tbl">
+      <column id="incomegroup" type="string"/>
+      <column id="year" type="date" format="yyyy"/>
+      <column id="cpi" type="float"/>
+      <data>
+	<file format="csv" encoding="UTF-8">cpi_by_incomegroup.csv</file>
+      </data>
+    </table>
+  </tables>
+</dspl>
+
